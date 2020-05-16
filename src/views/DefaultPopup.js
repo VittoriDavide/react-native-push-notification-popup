@@ -118,14 +118,15 @@ export default class DefaultPopup extends Component {
     } else {
       // 2. If not leaving screen -> slide back to original position
       this.clearTimerIfExist();
-      Animated.timing(containerDragOffsetY, { toValue: 0, duration: 200 })
+
+      Animated.timing(containerDragOffsetY, { toValue: 0, duration: 200, useNativeDriver: true })
         .start(({finished}) => {
           // Reset a new countdown
           this.countdownToSlideOut();
         });
     }
   }
-  
+
   renderPopupContent = () => {
     const { appIconSource, appTitle, timeText, title, body } = this.state;
     const { renderPopupContent } = this.props;
@@ -190,7 +191,7 @@ export default class DefaultPopup extends Component {
     // console.log('PressIn!');  // DEBUG
     // Show feedback as soon as user press down
     const { containerScale } = this.state;
-    Animated.spring(containerScale, { toValue: 0.95, friction: 8 })
+    Animated.spring(containerScale, { toValue: 0.95, friction: 8, useNativeDriver: true })
       .start();
   }
 
@@ -198,7 +199,7 @@ export default class DefaultPopup extends Component {
     // console.log('PressOut!');  // DEBUG
     // Show feedback as soon as user press down
     const { containerScale } = this.state;
-    Animated.spring(containerScale, { toValue: 1, friction: 8 })
+    Animated.spring(containerScale, { toValue: 1, friction: 8, useNativeDriver: true })
       .start();
   }
 
@@ -220,7 +221,7 @@ export default class DefaultPopup extends Component {
   slideIn = (duration) => {
     // Animate "this.state.containerSlideOffsetY"
     const { containerSlideOffsetY } = this.state;  // Using the new one is fine
-    Animated.timing(containerSlideOffsetY, { toValue: 1, duration: duration || 400, })  // TODO: customize
+    Animated.timing(containerSlideOffsetY, { toValue: 1, duration: duration || 400, useNativeDriver: true })  // TODO: customize
       .start(({finished}) => {
         this.countdownToSlideOut();
       });
@@ -237,7 +238,7 @@ export default class DefaultPopup extends Component {
     const { containerSlideOffsetY } = this.state;
 
     // Reset animation to 0 && show it && animate
-    Animated.timing(containerSlideOffsetY, { toValue: 0, duration: duration || 400, })  // TODO: customize
+    Animated.timing(containerSlideOffsetY, { toValue: 0, duration: duration || 400, useNativeDriver: true })  // TODO: customize
       .start(({finished}) => {
         // Reset everything and hide the popup
         this.setState({ show: false });
